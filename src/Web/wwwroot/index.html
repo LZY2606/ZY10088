@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>孔板异常溯源复盘</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>孔板异常溯源复盘</h1>
+  <div id="status-bar"></div>
+</header>
+
+<section id="ingest">
+  <h2>1. 事件录入（批量提交，幂等）</h2>
+  <div class="row">
+    <button id="load-example">载入示例事件</button>
+    <button id="submit-batch">提交批次</button>
+    <span id="ingest-result"></span>
+  </div>
+  <textarea id="batch-json" rows="14" spellcheck="false"></textarea>
+</section>
+
+<section id="errors">
+  <h2>2. 证据错误</h2>
+  <ul id="error-list"></ul>
+</section>
+
+<section id="wells">
+  <h2>3. 孔位状态（板内坐标互不相混）</h2>
+  <table id="well-table">
+    <thead><tr><th>孔位</th><th>别名</th><th>初始体积 (uL)</th><th>当前体积 (uL)</th><th>读数</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<section id="trace">
+  <h2>4. 异常追踪</h2>
+  <div class="row">
+    <label>读数阈值 <input id="threshold" type="number" value="1000"></label>
+    <label>单位 <input id="unit" type="text" value="RFU"></label>
+    <label>最小贡献比例 <input id="min-fraction" type="number" step="0.01" value="0"></label>
+    <button id="run-trace">追踪</button>
+  </div>
+  <div id="anomaly-list"></div>
+  <div id="path-list"></div>
+</section>
+
+<section id="hypotheses">
+  <h2>5. 污染假设（候选层，不改原始日志）</h2>
+  <div class="row">
+    <select id="hyp-kind">
+      <option value="carryover">吸液携带 (carryover)</option>
+      <option value="diluentBatch">稀释液批次 (diluentBatch)</option>
+    </select>
+    <input id="hyp-target" placeholder="事件ID 或 批次ID">
+    <input id="hyp-note" placeholder="备注">
+    <button id="add-hyp">保存假设</button>
+    <button id="run-analysis">评估假设</button>
+  </div>
+  <ul id="hyp-list"></ul>
+  <div id="analysis-result"></div>
+</section>
+
+<section id="conclusion">
+  <h2>6. 批次结论</h2>
+  <div class="row">
+    <button id="publish">发布结论</button>
+    <button id="export">导出</button>
+    <span id="conclusion-status"></span>
+  </div>
+  <div id="missing-freezes"></div>
+  <details id="evidence">
+    <summary>支撑证据（输入、规则版本、事件顺序）</summary>
+    <pre id="evidence-body"></pre>
+  </details>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>

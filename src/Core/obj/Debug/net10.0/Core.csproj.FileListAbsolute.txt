@@ -1,0 +1,12 @@
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/bin/Debug/net10.0/Core.deps.json
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/bin/Debug/net10.0/Core.dll
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/bin/Debug/net10.0/Core.pdb
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/Core.AssemblyInfoInputs.cache
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/Core.AssemblyInfo.cs
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/Core.csproj.CoreCompileInputs.cache
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/Core.sourcelink.json
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/Core.dll
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/refint/Core.dll
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/Core.pdb
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/B/work/src/Core/obj/Debug/net10.0/ref/Core.dll

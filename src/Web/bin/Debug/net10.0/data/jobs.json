@@ -1,0 +1,1 @@
+[{"jobId":"recompute-demo-batch-1","kind":"recompute","status":2,"resultJson":"events=18","createdAt":"2026-09-19T20:36:33.844882+00:00","completedAt":"2026-09-19T20:36:33.84579+00:00"},{"jobId":"recompute-demo-batch-2","kind":"recompute","status":2,"resultJson":"events=19","createdAt":"2026-09-19T20:37:23.903293+00:00","completedAt":"2026-09-19T20:37:23.903423+00:00"}]
