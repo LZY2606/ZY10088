@@ -34,3 +34,6 @@ coverage/
 .vite/
 .turbo/
 *.tsbuildinfo
+
+# --- 本地运行期数据（PlateTrace）---
+src/Web/App_Data/

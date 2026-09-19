@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PlateTrace · 多孔板污染复盘</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header>
+  <h1>PlateTrace <span class="sub">多孔板移液/稀释/读板 复盘台</span></h1>
+  <div class="meta">
+    <span>规则版本 <code id="ruleVersion">-</code></span>
+    <span>投影指纹 <code id="fingerprint">-</code></span>
+    <span>最后序号 <code id="lastSeq">-</code></span>
+    <button id="refreshBtn" class="ghost">刷新</button>
+    <button id="resetDemo" class="ghost danger">重置为演示数据</button>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button data-tab="overview" class="active">概览与证据错误</button>
+  <button data-tab="submit">批量提交</button>
+  <button data-tab="graph">转移图 / 稀释路径</button>
+  <button data-tab="hypo">污染假设</button>
+  <button data-tab="conclusions">批次结论</button>
+  <button data-tab="timeline">事件时间线（原始日志）</button>
+</nav>
+
+<main>
+  <!-- ================= overview ================= -->
+  <section id="tab-overview" class="tab active">
+    <div class="cards">
+      <div class="card"><h3>板</h3><div id="plates" class="grid"></div></div>
+      <div class="card"><h3>试剂批次</h3><div id="reagents" class="grid"></div></div>
+      <div class="card"><h3>枪头生命周期</h3><div id="tips" class="grid"></div></div>
+    </div>
+    <div class="card">
+      <h3>证据错误 <span id="errCount" class="pill warn"></span></h3>
+      <table id="errors"><thead><tr><th>代码</th><th>说明</th><th>事件</th><th>孔</th><th>枪头</th></tr></thead><tbody></tbody></table>
+      <p class="hint">候选层的整批校验失败不会写入事件日志；这里还包含已拒绝批次的错误，可在“时间线”中展开。</p>
+    </div>
+    <div class="card">
+      <h3>孔状态 / 读数</h3>
+      <input id="wellFilter" placeholder="过滤孔位 / 别名，例如 P2/A1 或 S-raw" />
+      <table id="wells">
+        <thead><tr><th>孔</th><th>板</th><th>坐标</th><th>别名</th><th>体积区间 (uL)</th><th>试剂批次</th><th>读数</th><th>状态</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= submit ================= -->
+  <section id="tab-submit" class="tab">
+    <div class="card">
+      <h3>以一次提交为边界（全部生效或全部保持原状）</h3>
+      <div class="row"><label>幂等键</label><input id="idemKey" placeholder="重试时保持相同即可安全重放" />
+      <label>备注</label><input id="batchNote" /></div>
+      <div id="eventRows"></div>
+      <div class="row">
+        <button id="addEvent">+ 添加事件</button>
+        <button id="submitBatch" class="primary">提交整批</button>
+        <button id="loadExample" class="ghost">填入示例（携带违规）</button>
+      </div>
+      <pre id="submitResult" class="result"></pre>
+    </div>
+  </section>
+
+  <!-- ================= graph ================= -->
+  <section id="tab-graph" class="tab">
+    <div class="card">
+      <h3>带体积守恒的转移图</h3>
+      <div class="row">
+        阈值（累计转移比例下限） <input id="minFrac" type="number" value="0.000001" step="0.000001" />
+        <button id="applyFrac" class="ghost">应用</button>
+        <span class="hint">只列出累计稀释区间可能达到阈值的路径；区间上界未知（?）的路径永远保留。</span>
+      </div>
+      <h4>转移边</h4>
+      <table id="edges"><thead><tr><th>事件</th><th>时间</th><th>源</th><th>目标</th><th>转移比例区间</th><th>吸液 (uL)</th><th>枪头</th><th>纠正</th></tr></thead><tbody></tbody></table>
+      <h4>符合阈值的路径与累计稀释范围</h4>
+      <div id="paths"></div>
+    </div>
+    <div class="card">
+      <h3>两个来源读数的显式换算比较</h3>
+      <div id="comparisons"></div>
+    </div>
+  </section>
+
+  <!-- ================= hypotheses ================= -->
+  <section id="tab-hypo" class="tab">
+    <div class="card">
+      <h3>提出污染假设（只更新候选层）</h3>
+      <div class="form">
+        <label>类型
+          <select id="hKind">
+            <option value="CarryOver">某次吸液携带 (CarryOver)</option>
+            <option value="ContaminatedReagent">某批稀释液受影响 (ContaminatedReagent)</option>
+            <option value="ContaminatedTip">一次性枪头污染 (ContaminatedTip)</option>
+          </select>
+        </label>
+        <label>说明 <input id="hDesc" placeholder="假设依据" /></label>
+        <label>目标转移事件 ID（携带） <input id="hEvent" placeholder="例如 B.../E005" /></label>
+        <label>试剂批次（污染稀释液） <input id="hReagent" placeholder="例如 DIL-A" /></label>
+        <label>枪头 ID（污染枪头） <input id="hTip" placeholder="例如 T2" /></label>
+        <label>分析物 <input id="hAnalyte" value="X" /></label>
+        <label>污染物浓度下界 <input id="hClo" type="number" value="5000" /></label>
+        <label>上界 <input id="hChi" type="number" value="5000" /></label>
+        <label>携带比例下界 <input id="hFlo" type="number" step="0.0001" value="0.0001" /></label>
+        <label>上界 <input id="hFhi" type="number" step="0.01" value="0.05" /></label>
+        <label>路径阈值 <input id="hMin" type="number" value="0.000001" step="0.000001" /></label>
+      </div>
+      <div class="row"><button id="saveHypo" class="primary">保存并触发后台评估</button>
+        <button id="pumpJobs" class="ghost">立即处理作业队列</button></div>
+    </div>
+    <div class="card">
+      <h3>假设版本与评估结果</h3>
+      <div id="hypoList"></div>
+    </div>
+  </section>
+
+  <!-- ================= conclusions ================= -->
+  <section id="tab-conclusions" class="tab">
+    <div class="card">
+      <h3>发布批次结论（引用的板与试剂版本必须全部冻结）</h3>
+      <div class="form">
+        <label>标题 <input id="cTitle" placeholder="例如 9月1日 P1/P2 批次复盘结论" /></label>
+        <label>引用板（逗号分隔） <input id="cPlates" placeholder="P1,P2" /></label>
+        <label>引用试剂批次 <input id="cReagents" placeholder="DIL-A" /></label>
+        <label>引用假设 ID <input id="cHyps" placeholder="H...." /></label>
+      </div>
+      <button id="publishC" class="primary">发布</button>
+      <pre id="publishResult" class="result"></pre>
+    </div>
+    <div class="card"><h3>结论列表（旧结论不可变；纠正只把工作副本置为需复核）</h3><div id="conclusionList"></div></div>
+  </section>
+
+  <!-- ================= timeline ================= -->
+  <section id="tab-timeline" class="tab">
+    <div class="card">
+      <h3>原始操作日志（只增不改）</h3>
+      <div id="timeline"></div>
+    </div>
+  </section>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "PlateTrace.Core/1.0.0": {
+        "runtime": {
+          "PlateTrace.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PlateTrace.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

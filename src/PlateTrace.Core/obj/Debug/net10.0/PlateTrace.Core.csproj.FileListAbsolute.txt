@@ -1,0 +1,12 @@
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/PlateTrace.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/PlateTrace.Core.AssemblyInfoInputs.cache
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/PlateTrace.Core.AssemblyInfo.cs
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/PlateTrace.Core.csproj.CoreCompileInputs.cache
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/PlateTrace.Core.sourcelink.json
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/bin/Debug/net10.0/PlateTrace.Core.deps.json
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/bin/Debug/net10.0/PlateTrace.Core.dll
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/bin/Debug/net10.0/PlateTrace.Core.pdb
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/PlateTrace.Core.dll
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/refint/PlateTrace.Core.dll
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/PlateTrace.Core.pdb
+/Users/lzy/pro/Pair-wiseGSB/workspace/1075/runs/A/work/src/PlateTrace.Core/obj/Debug/net10.0/ref/PlateTrace.Core.dll
